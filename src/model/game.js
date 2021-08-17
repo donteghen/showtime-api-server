@@ -19,10 +19,47 @@ const gameSchema = new mongoose.Schema({
         type : String,
         required: [true, 'please a thumbnail'],
     },
-    github_link : {
+    youtubeId: {
         type : String,
-        required: [true, 'please enter a project source link']
-    }
+        required: [true, 'please enter a youtube id']
+    },
+    category : {
+        tournament : {
+            name : {
+                type : String,
+                required : [true, 'please enter a tounament name']
+            }, 
+            specific_name : {
+                type : String,
+                required : [true, 'please specify the tournament']
+            }
+        }
+    },
+    game_date : {
+        type : String,
+        trim : true
+    },
+    homeTeam : {
+        name : {
+            type : String,
+            required : [true, 'please enter the home teams name']
+        },
+        goals : {
+            type : Number,
+            required : [true, 'please enter the home teams total goals']
+        }
+    },
+    awayTeam : {
+        name : {
+            type : String,
+            required : [true, 'please enter the away teams name']
+        },
+        goals : {
+            type : Number,
+            required : [true, 'please enter he away teams total goals']
+        }
+    },
+    
 });
 
 const Game = mongoose.model('Game', gameSchema)

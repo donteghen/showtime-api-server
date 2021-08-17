@@ -46,7 +46,7 @@ const userSchema = new mongoose.Schema({
     },
     
     watchLater : {
-        type: [String],
+        type: [mongoose.SchemaTypes.ObjectId],
     },
     tokens : {
         type : [String],
