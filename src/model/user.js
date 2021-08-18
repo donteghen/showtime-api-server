@@ -51,6 +51,9 @@ const userSchema = new mongoose.Schema({
     tokens : {
         type : [String],
         required : true
+    },
+    liked : {
+        type : [mongoose.Types.ObjectId]
     }
 }, {
     timestamps:true

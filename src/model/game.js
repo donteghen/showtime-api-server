@@ -59,7 +59,10 @@ const gameSchema = new mongoose.Schema({
             required : [true, 'please enter he away teams total goals']
         }
     },
-    
+    likes : {
+        type : Number,
+        default : 0
+    }
 });
 
 const Game = mongoose.model('Game', gameSchema)

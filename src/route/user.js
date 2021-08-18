@@ -1,6 +1,7 @@
 const express = require('express');
 const auth = require('../middleware/userAuth');
 const User = require('../model/user');
+const Game = require('../model/game');
 const upload = require('../helpers/multerUpload');
 const cloudinary = require('../helpers/cloudinaryUpload');
 const Admin = require('../middleware/adminAuth');
@@ -14,7 +15,6 @@ router.get('/api/users/profile', auth, async (req, res) =>{
         res.status(400).send(error.message)
     }
 })
-
 
 router.post('/api/users/profile/avatar', auth, upload.single('avatar'), async (req, res) => {
     try {

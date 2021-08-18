@@ -5,8 +5,8 @@ require('./src/config/db')()
 
 const userRouter = require('./src/route/user')
 const gameRouter = require('./src/route/game')
-//const userRequestRouter = require('./src/route/userRequest')
-//const CommentRouter = require('./src/route/comment');
+const userRequestRouter = require('./src/route/userRequest')
+const CommentRouter = require('./src/route/comment');
 const sendMail = require('./src/helpers/mailer');
 
 
@@ -21,9 +21,8 @@ app.use(express.urlencoded({extended:true}))
 
 app.use(userRouter)
 app.use(gameRouter)
-//app.use(userRequestRouter)
-//app.use(CommentRouter)
-
+app.use(userRequestRouter)
+app.use(CommentRouter)
 app.post('/api/contact', sendMail)
 app.get("*", (req, res) => {
     res.sendFile(path.join(__dirname, '../client', 'build', 'index.html'));

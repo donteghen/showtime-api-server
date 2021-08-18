@@ -76,7 +76,6 @@ router.put('/api/games/:id', auth, Admin, upload.single('thumbnail'), async (req
                public_id: req.file.filename 
             }
         );
-        
         game.title = req.body.title,
         game.description = req.body.description
         game.youtubeId = req.body.youtubeId
@@ -96,6 +95,28 @@ router.put('/api/games/:id', auth, Admin, upload.single('thumbnail'), async (req
         res.status(400).send(error.message)
     }
 })
+
+/** Route for liking a game */
+router.post('/api/games/:id/liked', auth, async (req, res) => {
+    try {
+        if(req.user.liked.includes(req.params.id)){
+            throw new Error('You already liked this game!')
+        }
+        const game = await Game.findById(req.params.id)
+        if(!game){
+            throw new Error('Game not found!')
+        }
+        game.likes++;
+        await game.save()
+        req.user.liked = req.user.liked.concat(req.params.id);
+        await req.user.save();
+        res.send('Game Liked')
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+})
+
+
 router.delete('/api/games/:id', auth, Admin, async (req, res) => {
     try {
         const game = await Game.findById(req.params.id);
