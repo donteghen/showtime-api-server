@@ -10,13 +10,39 @@ router.get('/api/games', async (req, res) => {
     try {
         const games = await Game.find()
         if(games.length === 0 ){
-            throw new Error('Nothing available')
+            throw new Error('Names games found')
         }
         res.send(games)
     } catch (error) {
         res.status(400).send(error.message)
     }
 })
+// get games by category name
+router.get('/api/games/:cat_name', async (req, res) => {
+    try {
+        const games = await Game.find({tournament_name:req.params.cat_name})
+        if(!games){
+            throw new Error('Names games found')
+        }
+        res.send(games)
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+})
+
+// get games by category specific name
+router.get('/api/games/:cat_spec_name', async (req, res) => {
+    try {
+        const games = await Game.find({tournament_name:req.params.cat_spec_name})
+        if(!games){
+            throw new Error('Names games found')
+        }
+        res.send(games)
+    } catch (error) {
+        res.status(400).send(error.message)
+    }
+})
+
 router.get('/api/games/:id', async (req, res) => {
     try {
         const game = await Game.findById(req.params.id)
@@ -46,6 +72,7 @@ router.post('/api/games', auth, Admin, upload.single('thumbnail'), async (req, r
                 }
             },
             game_date : req.body.game_date,
+            duration: req.body.duration,
             homeTeam : {
                 name : req.body.homeTeam_name,
                 goals : req.body.homeTeam_goals
@@ -82,6 +109,7 @@ router.put('/api/games/:id', auth, Admin, upload.single('thumbnail'), async (req
         game.category.tournament.name = req.body.tournament_name
         game.category.tournament.specific_name = req.body.tournament_specific_name
         game.game_date = req.body.game_date,
+        game.duration = req.body.duration,
         game.homeTeam.name = req.body.homeTeam_name
         game.homeTeam.goals = req.body.homeTeam_goals
         game.awayTeam.name = req.body.awayTeam_name

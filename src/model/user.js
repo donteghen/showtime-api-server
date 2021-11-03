@@ -47,6 +47,7 @@ const userSchema = new mongoose.Schema({
     
     watchLater : {
         type: [mongoose.SchemaTypes.ObjectId],
+        ref : 'Game'
     },
     tokens : {
         type : [String],
@@ -56,7 +57,9 @@ const userSchema = new mongoose.Schema({
         type : [mongoose.Types.ObjectId]
     }
 }, {
-    timestamps:true
+    timestamps:true,
+    toJSON : {virtuals : true},
+    toObject : {virtuals : true}
 })
 
 

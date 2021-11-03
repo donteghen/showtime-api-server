@@ -39,6 +39,10 @@ const gameSchema = new mongoose.Schema({
         type : String,
         trim : true
     },
+    duration: {
+        type: String,
+        required: [true, 'Please enter the game highlight duration']
+    },
     homeTeam : {
         name : {
             type : String,

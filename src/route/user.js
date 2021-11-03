@@ -9,6 +9,7 @@ const Admin = require('../middleware/adminAuth');
 const router = new express.Router()
 
 router.get('/api/users/profile', auth, async (req, res) =>{
+    
     try {
         res.send(req.user)
     } catch (error) {
