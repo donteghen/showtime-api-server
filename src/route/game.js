@@ -6,8 +6,9 @@ const Game = require('../model/game')
 const upload = require('../helpers/multerUpload');
 const cloudinary = require('../helpers/cloudinaryUpload');
 
-router.get('/api/games', async (req, res) => {
+ router.get('/api/games', async (req, res) => {
     try {
+        console.log('yes')
         const games = await Game.find()
         if(games.length === 0 ){
             throw new Error('Names games found')
@@ -17,10 +18,11 @@ router.get('/api/games', async (req, res) => {
         res.status(400).send(error.message)
     }
 })
-// get games by category name
-router.get('/api/games/:cat_name', async (req, res) => {
+//get games by category name
+router.get('/api/games/category/:cat_name', async (req, res) => {
     try {
-        const games = await Game.find({tournament_name:req.params.cat_name})
+        
+        const games = await Game.find({'category.tournament.name': req.params.cat_name})
         if(!games){
             throw new Error('Names games found')
         }
@@ -31,9 +33,10 @@ router.get('/api/games/:cat_name', async (req, res) => {
 })
 
 // get games by category specific name
-router.get('/api/games/:cat_spec_name', async (req, res) => {
+router.get('/api/games/category/:cat_name/specific/:cat_spec_name', async (req, res) => {
     try {
-        const games = await Game.find({tournament_name:req.params.cat_spec_name})
+        //console.log(req.path, req.params)
+        const games = await Game.find({'category.tournament.specific_name': req.params.cat_spec_name})
         if(!games){
             throw new Error('Names games found')
         }
@@ -45,6 +48,7 @@ router.get('/api/games/:cat_spec_name', async (req, res) => {
 
 router.get('/api/games/:id', async (req, res) => {
     try {
+        console.log(req.params.id)
         const game = await Game.findById(req.params.id)
         if(!game){
             throw new Error('no found !')
